@@ -11,7 +11,6 @@ def search_weather():
         return
 
     try:
-        # Step 1: Get coordinates from city name
         geo_url = (
             "https://geocoding-api.open-meteo.com/v1/search"
             f"?name={city_name}&count=1"
@@ -30,8 +29,6 @@ def search_weather():
         longitude = place["longitude"]
         city_found = place["name"]
         country = place.get("country", "")
-
-        # Step 2: Get 3-day forecast
         weather_url = (
             "https://api.open-meteo.com/v1/forecast"
             f"?latitude={latitude}"
@@ -66,9 +63,6 @@ def search_weather():
 
     except Exception as e:
         messagebox.showerror("Error", str(e))
-
-
-# GUI
 app = tk.Tk()
 app.title("Weather Forecast")
 app.geometry("500x400")
