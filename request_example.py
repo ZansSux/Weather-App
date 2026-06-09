@@ -25,6 +25,8 @@ def getCoordinates(cc):
     
 def weatherout(cc):
     coors = getCoordinates(cc)
+    if coors == None:
+        return None, None
     param1 = {
         "latitude": coors[0],
         "longitude": coors[1],
