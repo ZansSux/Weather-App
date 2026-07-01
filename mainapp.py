@@ -60,12 +60,12 @@ def open_metrics_view():
     metrics_window = tk.Toplevel(app)
     metrics_window.title("3-Day Detailed Parameters")
     metrics_window.geometry("580x550")
-    metrics_window.configure(bg="#FFFFFF")
+    metrics_window.configure(bg="#121212")
     
-    title_lbl = tk.Label(metrics_window, text="Comprehensive Forecast Overview".upper(), font=("Helvetica", 10, "bold"), bg="#FFFFFF", fg="#999999")
+    title_lbl = tk.Label(metrics_window, text="Comprehensive Forecast Overview".upper(), font=("Helvetica", 10, "bold"), bg="#121212", fg="#888888")
     title_lbl.pack(pady=(20, 15))
     
-    main_frame = tk.Frame(metrics_window, bg="#FFFFFF")
+    main_frame = tk.Frame(metrics_window, bg="#121212")
     main_frame.pack(fill="both", expand=True, padx=20)
 
     for day_data in cached_3day_metrics:
@@ -73,17 +73,18 @@ def open_metrics_view():
             main_frame, 
             text=f"  {day_data['day_title']} — {day_data['emoji']} {day_data['condition']}  ", 
             font=("Helvetica", 11, "bold"), 
-            bg="#FFFFFF", 
-            fg="#111111",
+            bg="#1E1E1E", 
+            fg="#FFFFFF",
             bd=1,
-            relief="solid"
+            relief="solid",
+            highlightbackground="#2C2C2C",
+            highlightcolor="#2C2C2C"
         )
         day_block.pack(fill="x", pady=10, ipady=10)
         
-        inner_grid = tk.Frame(day_block, bg="#FFFFFF")
+        inner_grid = tk.Frame(day_block, bg="#1E1E1E")
         inner_grid.pack(fill="x", padx=15, pady=5)
         
-        # Configure columns weights so they distribute space evenly instead of breaking text lengths
         inner_grid.columnconfigure(0, weight=1)
         inner_grid.columnconfigure(1, weight=1)
         inner_grid.columnconfigure(2, weight=1)
@@ -96,25 +97,23 @@ def open_metrics_view():
         ]
         
         for r_idx, (k1, v1, k2, v2) in enumerate(metrics_list):
-            # Left key-value pair
-            tk.Label(inner_grid, text=k1, font=("Helvetica", 10), bg="#FFFFFF", fg="#666666", anchor="w").grid(row=r_idx, column=0, sticky="w", pady=4, padx=(0,5))
-            tk.Label(inner_grid, text=v1, font=("Helvetica", 10, "bold"), bg="#FFFFFF", fg="#111111", anchor="w").grid(row=r_idx, column=1, sticky="w", pady=4, padx=(0,15))
+            tk.Label(inner_grid, text=k1, font=("Helvetica", 10), bg="#1E1E1E", fg="#A0A0A0", anchor="w").grid(row=r_idx, column=0, sticky="w", pady=4, padx=(0,5))
+            tk.Label(inner_grid, text=v1, font=("Helvetica", 10, "bold"), bg="#1E1E1E", fg="#FFFFFF", anchor="w").grid(row=r_idx, column=1, sticky="w", pady=4, padx=(0,15))
             
-            # Right key-value pair
             if k2:
-                tk.Label(inner_grid, text=k2, font=("Helvetica", 10), bg="#FFFFFF", fg="#666666", anchor="w").grid(row=r_idx, column=2, sticky="w", pady=4, padx=(0,5))
-                tk.Label(inner_grid, text=v2, font=("Helvetica", 10, "bold"), bg="#FFFFFF", fg="#111111", anchor="w").grid(row=r_idx, column=3, sticky="w", pady=4)
+                tk.Label(inner_grid, text=k2, font=("Helvetica", 10), bg="#1E1E1E", fg="#A0A0A0", anchor="w").grid(row=r_idx, column=2, sticky="w", pady=4, padx=(0,5))
+                tk.Label(inner_grid, text=v2, font=("Helvetica", 10, "bold"), bg="#1E1E1E", fg="#FFFFFF", anchor="w").grid(row=r_idx, column=3, sticky="w", pady=4)
 
 def open_history_view():
     history_window = tk.Toplevel(app)
     history_window.title("Historical Search Records")
     history_window.geometry("920x380")
-    history_window.configure(bg="#FFFFFF")
+    history_window.configure(bg="#121212")
     
-    header_lbl = tk.Label(history_window, text="Local Search History", font=("Helvetica", 12, "bold"), bg="#FFFFFF", fg="#111111")
+    header_lbl = tk.Label(history_window, text="Local Search History", font=("Helvetica", 12, "bold"), bg="#121212", fg="#FFFFFF")
     header_lbl.pack(pady=15)
 
-    table_container = tk.Frame(history_window, bg="#FFFFFF")
+    table_container = tk.Frame(history_window, bg="#121212")
     table_container.pack(fill="both", expand=True, padx=20, pady=5)
 
     cols = ("id", "city", "country", "max", "min", "condition", "humidity", "wind_speed", "sunrise", "sunset", "time")
@@ -154,7 +153,7 @@ def open_history_view():
     except Exception as error:
         messagebox.showerror("Database Read Failure", f"Could not read historical records: {error}")
 
-    exit_btn = tk.Button(history_window, text="Dismiss Log", command=history_window.destroy, font=("Helvetica", 10), bg="#FFFFFF", fg="#111111", relief="flat", activebackground="#F5F5F5")
+    exit_btn = tk.Button(history_window, text="Dismiss Log", command=history_window.destroy, font=("Helvetica", 10), bg="#1E1E1E", fg="#FFFFFF", relief="flat", activebackground="#2C2C2C", activeforeground="#FFFFFF")
     exit_btn.pack(pady=15)
 
 def search_weather():
@@ -266,7 +265,7 @@ def search_weather():
         )
 
         for i in range(len(dates)):
-            column_frame = tk.Frame(forecast_container, bg="#FFFFFF")
+            column_frame = tk.Frame(forecast_container, bg="#121212")
             column_frame.pack(side="left", fill="both", expand=True, padx=15)
 
             try:
@@ -275,15 +274,15 @@ def search_weather():
             except Exception:
                 formatted_date = dates[i]
 
-            day_lbl = tk.Label(column_frame, text=formatted_date, font=("Helvetica", 10, "bold"), bg="#FFFFFF", fg="#999999")
+            day_lbl = tk.Label(column_frame, text=formatted_date, font=("Helvetica", 10, "bold"), bg="#121212", fg="#888888")
             day_lbl.pack(pady=(0, 4))
 
             cond_text, sub_emoji = wmo_codes.get(current_codes[i], ("Unknown", "❓"))
-            cond_lbl = tk.Label(column_frame, text=f"{sub_emoji}\n{cond_text}", font=("Helvetica", 10), bg="#FFFFFF", fg="#666666", justify="center")
+            cond_lbl = tk.Label(column_frame, text=f"{sub_emoji}\n{cond_text}", font=("Helvetica", 10), bg="#121212", fg="#A0A0A0", justify="center")
             cond_lbl.pack(pady=2)
 
             range_text = f"{round(max_temps[i])}° / {round(min_temps[i])}°"
-            range_lbl = tk.Label(column_frame, text=range_text, font=("Helvetica", 11, "bold"), bg="#FFFFFF", fg="#111111")
+            range_lbl = tk.Label(column_frame, text=range_text, font=("Helvetica", 11, "bold"), bg="#121212", fg="#FFFFFF")
             range_lbl.pack(pady=(4, 0))
 
     except Exception as e:
@@ -292,7 +291,7 @@ def search_weather():
 app = tk.Tk()
 app.title("Weather")
 app.geometry("480x690") 
-app.configure(bg="#FFFFFF")
+app.configure(bg="#121212")
 
 try:
     app_icon = tk.PhotoImage(file='logo.png')
@@ -302,13 +301,14 @@ except Exception:
 
 style = ttk.Style()
 style.theme_use("clam")
-style.configure("Treeview", background="#FFFFFF", fieldbackground="#FFFFFF", foreground="#111111", font=("Helvetica", 10))
-style.configure("Treeview.Heading", background="#F5F5F5", foreground="#111111", font=("Helvetica", 10, "bold"), relief="flat")
+style.configure("Treeview", background="#1E1E1E", fieldbackground="#1E1E1E", foreground="#FFFFFF", font=("Helvetica", 10))
+style.configure("Treeview.Heading", background="#2C2C2C", foreground="#FFFFFF", font=("Helvetica", 10, "bold"), relief="flat")
+style.map("Treeview.Heading", background=[('active', '#3D3D3D')])
 
-search_frame = tk.Frame(app, bg="#FFFFFF")
+search_frame = tk.Frame(app, bg="#121212")
 search_frame.pack(pady=(35, 20))
 
-city_input = tk.Entry(search_frame, width=22, font=("Helvetica", 14), bd=0, bg="#F2F2F7", fg="#111111", justify="center", insertbackground="#111111")
+city_input = tk.Entry(search_frame, width=22, font=("Helvetica", 14), bd=0, bg="#1E1E1E", fg="#FFFFFF", justify="center", insertbackground="#FFFFFF")
 city_input.pack(side="left", padx=5, ipady=8)
 city_input.focus_set()
 
@@ -317,36 +317,34 @@ search_btn = tk.Button(
     text="Search", 
     command=search_weather, 
     font=("Helvetica", 11, "bold"),
-    bg="#111111", 
-    fg="#FFFFFF",
-    activebackground="#222222",
-    activeforeground="#FFFFFF",
+    bg="#FFFFFF", 
+    fg="#121212",
+    activebackground="#E5E5E5",
+    activeforeground="#121212",
     bd=0, 
     padx=20, 
     pady=8,
-    cursor="hand2"
 )
 search_btn.pack(side="left", padx=5)
 
-display_container = tk.Frame(app, bg="#FFFFFF")
+display_container = tk.Frame(app, bg="#121212")
 display_container.pack(fill="x", padx=30)
 
-location_title_label = tk.Label(display_container, text="", font=("Helvetica", 11, "bold"), bg="#FFFFFF", fg="#999999")
+location_title_label = tk.Label(display_container, text="", font=("Helvetica", 11, "bold"), bg="#121212", fg="#888888")
 location_title_label.pack(pady=(10, 0))
 
-emoji_display_label = tk.Label(display_container, text="", font=("Segoe UI Emoji", 48), bg="#FFFFFF", fg="#111111")
+emoji_display_label = tk.Label(display_container, text="", font=("Segoe UI Emoji", 48), bg="#121212", fg="#FFFFFF")
 emoji_display_label.pack(pady=(5, 0))
 
-temp_display_label = tk.Label(display_container, text="", font=("Helvetica Light", 64), bg="#FFFFFF", fg="#111111")
+temp_display_label = tk.Label(display_container, text="", font=("Helvetica Light", 64), bg="#121212", fg="#FFFFFF")
 temp_display_label.pack(pady=(0, 2))
 
 condition_clickable_label = tk.Label(
     display_container, 
     text="", 
     font=("Helvetica", 11), 
-    bg="#FFFFFF", 
-    fg="#8E8E93", 
-    cursor="hand2",
+    bg="#121212", 
+    fg="#A0A0A0", 
     justify="center"
 )
 condition_clickable_label.pack(pady=(0, 10))
@@ -357,18 +355,17 @@ more_details_btn = tk.Button(
     text="More Details →",
     command=open_metrics_view,
     font=("Helvetica", 11, "bold"),
-    bg="#FFFFFF",
-    fg="#007AFF",
-    activebackground="#FFFFFF",
+    bg="#121212",
+    fg="#0A84FF",
+    activebackground="#121212",
     activeforeground="#0051A3",
     bd=0,
-    cursor="hand2"
 )
 
-divider_line = tk.Frame(app, height=1, bg="#E5E5EA")
+divider_line = tk.Frame(app, height=1, bg="#2C2C2C")
 divider_line.pack(fill="x", padx=40, pady=(0, 25))
 
-forecast_container = tk.Frame(app, bg="#FFFFFF")
+forecast_container = tk.Frame(app, bg="#121212")
 forecast_container.pack(fill="x", padx=20)
 
 app.mainloop()
